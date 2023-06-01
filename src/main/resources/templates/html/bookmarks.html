@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My bookmarks</title>
+    <link href="/css/navigation.css" rel="stylesheet">
+    <link href="/css/bookmarks.css" rel="stylesheet">
+</head>
+<body>
+    <div th:insert="~{/html/navigation :: nav}"></div>
+    <div class="bookmarks">
+        <h2>Bookmarks:</h2>
+        <div th:each="bookmark: ${bookmarks}" th:if="${!bookmarks.isEmpty()}" class="bookmark">
+            <span th:text="${bookmark.drive.source} + ' - ' + ${bookmark.drive.destination}"></span>
+            <span th:text="${bookmark.drive.date}"></span>
+            <span th:text="${bookmark.drive.time}"></span>
+            <span th:text="'Price: ' + ${bookmark.drive.price}"></span>
+            <span th:text="${bookmark.drive.numberOfPassengers - bookmark.drive.companions.size} + ' places left'"></span>
+            <span>Driver:</span>
+            <a th:href="@{${'/profile/' + bookmark.drive.driver.id}}" th:text="${bookmark.drive.driver.username}"></a>
+            <a th:href="@{${'/drive/book/' + bookmark.drive.id}}" th:if="${!bookmark.drive.companions.contains(currentUser)}">Book</a>
+            <a th:href="@{${'/bookmark/delete/' + bookmark.id}}">Delete</a>
+        </div>
+        <span th:if="${bookmarks.isEmpty()}">You have no bookmarks</span>
+    </div>
+</body>
+</html>

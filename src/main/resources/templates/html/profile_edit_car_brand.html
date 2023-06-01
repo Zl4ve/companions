@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Car brand</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/profile/edit/brand}" th:object="${carInfo}">
+        <label for="brand">Enter the brand of your car</label>
+        <input type="text" th:field="*{brand}" id="brand">
+        <div th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}">Brand error</div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

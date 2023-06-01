@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Change avatar</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/profile/edit/avatar}" th:object="${avatarForm}" enctype="multipart/form-data">
+            <input type="file" th:field="*{avatar}" id="avatar">
+        <div th:if="${#fields.hasErrors('avatar')}" th:errors="*{avatar}">Avatar error</div>
+        <button type="submit">Update avatar</button>
+    </form>
+</body>
+</html>

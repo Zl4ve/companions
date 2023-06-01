@@ -1,0 +1,87 @@
+.search {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 50px;
+    margin: 50px auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 800px;
+    width: calc(100% - 250px);
+}
+.search label {
+    display: block;
+    margin-bottom: 10px;
+}
+.search input {
+    border: none;
+    border-radius: 3px;
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.2);
+    padding: 10px;
+    width: 100%;
+}
+
+#from-list {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#from-list li {
+    cursor: pointer;
+    padding: 10px;
+}
+
+#from-list li:hover {
+    background-color: #f2f2f2;
+}
+#to-list {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#to-list li {
+    cursor: pointer;
+    padding: 10px;
+}
+
+#to-list li:hover {
+    background-color: #f2f2f2;
+}
+
+.profile-img {
+    border-radius: 50%;
+    height: 75px;
+    width: 75px;
+}
+
+.drive {
+    display: flex;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.drive-left-content {
+    display: flex;
+    flex-direction: column;
+}
+.drive-right-content {
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+}

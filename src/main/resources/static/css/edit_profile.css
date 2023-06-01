@@ -1,0 +1,14 @@
+.links {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    padding: 50px;
+    margin: 50px auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 800px;
+    width: calc(100% - 250px);
+}

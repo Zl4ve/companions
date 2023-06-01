@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create drive</title>
+    <script th:if="${hasCarInfo}" src="/js/autocomplete_location.js" defer></script>
+    <link href="/css/navigation.css" rel="stylesheet">
+    <link href="/css/create_drive.css" rel="stylesheet">
+</head>
+<body>
+    <div th:insert="~{/html/navigation :: nav}"></div>
+    <div class="create">
+        <form th:if="${hasCarInfo}" th:method="post" th:action="@{/drive/create}" th:object="${driveForm}">
+            <label for="source">From</label>
+            <input type="text" id="source" name="source" th:field="*{source}">
+            <ul id="from-list">
+
+            </ul>
+            <div th:if="${#fields.hasErrors('source')}" th:errors="*{source}">Source error</div>
+
+            <label for="destination">To</label>
+            <input type="text" id="destination" th:field="*{destination}">
+            <ul id="to-list">
+
+            </ul>
+            <div th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}">Destination error</div>
+
+            <label for="date">Date</label>
+            <input type="date" id="date" th:field="*{date}">
+            <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date error</div>
+
+            <label for="time">Time</label>
+            <input type="time" id="time" th:field="*{time}">
+            <div th:if="${#fields.hasErrors('time')}" th:errors="*{time}">Time error</div>
+
+            <label for="price">Price</label>
+            <input type="text" id="price" th:field="*{price}">
+            <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">Price error</div>
+
+            <label for="passengers">Number of passengers</label>
+            <input type="text" id="passengers" th:field="*{numberOfPassengers}">
+            <div th:if="${#fields.hasErrors('numberOfPassengers')}" th:errors="*{numberOfPassengers}">Passengers error</div>
+
+            <button type="submit">Submit</button>
+        </form>
+        <div th:if="${!hasCarInfo}">
+            <p th:text="'You can\'t create drive, because you need to provide information about your car'"></p>
+            <a href="/profile/edit/brand">Go to edit car information page</a>
+        </div>
+    </div>
+
+</body>
+</html>

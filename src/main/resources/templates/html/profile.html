@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <script src="/js/get_reviews.js" defer></script>
+    <link href="/css/navigation.css" rel="stylesheet">
+    <link href="/css/profile.css" rel="stylesheet">
+</head>
+<body>
+<div th:insert="~{/html/navigation :: nav}"></div>
+<div class="profile">
+    <div class="info">
+        <div class="left-part">
+            <img class="profile-img" th:if="${currentUser.details.avatarReference != null}" th:src="@{${'/image/' + currentUser.details.avatarReference}}">
+            <img class="profile-img" th:if="${currentUser.details.avatarReference == null}" th:src="@{'/image/emptyavatar.png'}"/>
+            <div class="phone-number">
+                <span>Contact:</span>
+                <span th:text="${currentUser.details.phoneNumber}"></span>
+            </div>
+        </div>
+        <div class="right-part">
+            <div class="right-part-container">
+                <span id="nickname" th:text="${currentUser.username}">User nick</span>
+                <span id="full-name" th:text="${currentUser.details.firstName} + ' ' + ${currentUser.details.lastName}"></span>
+                <span th:if="${currentUser.details.rating != null}" th:id="'rating'" th:text="${'Rating: ' + currentUser.details.rating}"></span>
+                <span th:if="${currentUser.details.rating == null}" th:id="'rating'" >Rating: No information</span>
+                <div th:if="${!currentUser.preferences.isEmpty()}" class="preferences">
+                    <span>Preferences: </span>
+                    <span th:each="preference: ${currentUser.preferences}" th:text="${preference.text}" id="preference"></span>
+                </div>
+                <div th:if="${currentUser.details.carBrand != null}">
+                    <span th:text="'Car: ' + ${currentUser.details.carBrand} + ' ' + ${currentUser.details.carModel}"></span>
+                </div>
+                <div th:if="${userRole != null}">
+                    <a th:if="${userRole.equals('ADMIN')}" th:href="'/warn/' + ${currentUser.id}"><button>Warn</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="third-part" th:if="${currentUser.accountStatus.toString().equals('BANNED')}">
+            <span>Banned</span>
+        </div>
+    </div>
+    <input type="hidden" id="user-id" th:value="${currentUser.id}">
+    <div id="reviews">
+        <h2>Reviews:</h2>
+
+    </div>
+</div>
+</body>
+</html>

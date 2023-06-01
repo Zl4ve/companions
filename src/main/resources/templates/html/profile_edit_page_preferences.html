@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add preference</title>
+</head>
+<body>
+    <form th:method="post" th:action="@{/profile/edit/preference}" th:object="${preferenceForm}">
+        <input type="hidden" name="_csrf" th:value="${_csrf.token}"/>
+        <label for="preference">Enter preference: </label>
+        <input type="text" id="preference" th:field="*{preference}">
+        <div th:if="${#fields.hasErrors('preference')}" th:errors="*{preference}">Preference error</div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

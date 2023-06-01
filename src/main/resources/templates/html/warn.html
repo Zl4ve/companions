@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Warn</title>
+</head>
+<body>
+    <form th:if="${error == null}" th:method="post" th:action="@{${'/warn/' + userId}}" th:object="${warnForm}">
+        <label for="text">Warn reason: </label>
+        <input type="text" th:field="*{text}" id="text"/>
+        <div th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Warn reason error</div>
+
+        <button type="submit">Warn</button>
+    </form>
+    <div id="error" th:if="${error != null}" th:text="${error}"></div>
+</body>
+</html>

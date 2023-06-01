@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My drives</title>
+    <script src="/js/drive_tabs.js" defer></script>
+    <script src="/js/process_review.js" defer></script>
+    <link href="/css/navigation.css" rel="stylesheet">
+    <link href="/css/user_drives.css" rel="stylesheet">
+</head>
+<body>
+    <div th:insert="~{/html/navigation :: nav}"></div>
+    <div class="user-drives">
+        <div class="tab">
+            <button class="tablink" onclick="openPage('books')">Books</button>
+            <button class="tablink" onclick="openPage('created-drives')" id="defaultOpen">My created drives</button>
+            <button class="tablink" onclick="openPage('finished')">Finished</button>
+        </div>
+
+        <div id="books" class="tabcontent">
+            <div th:each="drive: ${currentUser.drivesAsCompanion}" th:if="${!drive.date.isBefore(currentDate)}">
+                <p th:text="${drive.source} + ' - ' + ${drive.destination}"></p>
+                <p th:text="${drive.date}"></p>
+                <p th:text="${drive.time}"></p>
+                <p th:text="${drive.price}"></p>
+                <p th:text="${drive.numberOfPassengers - drive.companions.size} + ' places left'"></p>
+                Driver:
+                <a th:href="@{${'/profile/' + drive.driver.id}}" th:text="${drive.driver.username}"></a>
+            </div>
+        </div>
+
+        <div id="created-drives" class="tabcontent">
+            <div th:each="drive: ${currentUser.drivesAsDriver}" th:if="${!drive.date.isBefore(currentDate)}" >
+                <p th:text="${drive.source} + ' - ' + ${drive.destination}"></p>
+                <p th:text="${drive.date}"></p>
+                <p th:text="${drive.time}"></p>
+                <p th:text="${drive.price}"></p>
+                <p th:text="${drive.numberOfPassengers - drive.companions.size} + ' places left'"></p>
+            </div>
+        </div>
+
+        <div id="finished" class="tabcontent">
+            <div th:each="drive: ${currentUser.drivesAsCompanion}" th:if="${drive.date.isBefore(currentDate)}">
+                <p th:text="${drive.source} + ' - ' + ${drive.destination}"></p>
+                <p th:text="${drive.date}"></p>
+                <p th:text="${drive.time}"></p>
+                Driver:
+                <a th:href="@{${'/profile/' + drive.driver.id}}" th:text="${drive.driver.username}"></a>
+                <button id="show-review-form-button" th:onclick="'showReviewForm(\'form' + ${drive.id} +'\')'">Leave feedback</button>
+                <form class="review-form" th:id="'form' + ${drive.id}" onsubmit="sendReviewData(event)">
+                    <input type="hidden" class="_csrf" name="_csrf" th:value="${_csrf.token}"/>
+                    <input type="hidden" class="drive-id" th:value="${drive.id}">
+                    <label for="rate">Rate</label>
+                    <input id="rate" class="rate">
+                    <label for="text">Text</label>
+                    <input id="text" class="text">
+                    <button id="send-review">Send</button>
+                </form>
+                <span th:id="'review-error' + ${drive.id}"></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

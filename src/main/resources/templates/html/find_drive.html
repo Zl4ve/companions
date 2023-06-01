@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Find drive</title>
+    <script src="/js/autocomplete_location.js" defer></script>
+    <link href="/css/navigation.css" rel="stylesheet">
+    <link href="/css/search_drive.css" rel="stylesheet">
+</head>
+<body>
+    <div th:insert="~{/html/navigation :: nav}"></div>
+    <div class="search">
+        <div class="search-form">
+            <form th:method="post" th:action="@{/drive/search}" th:object="${searchDriveForm}">
+                <label for="source">From</label>
+                <input type="text" id="source" name="source" th:field="*{source}">
+                <ul id="from-list">
+
+                </ul>
+                <div th:if="${#fields.hasErrors('source')}" th:errors="*{source}">Source error</div>
+
+                <label for="destination">To</label>
+                <input type="text" id="destination" th:field="*{destination}">
+                <ul id="to-list">
+
+                </ul>
+                <div th:if="${#fields.hasErrors('destination')}" th:errors="*{destination}">Destination error</div>
+
+                <label for="date">Date</label>
+                <input type="date" id="date" th:field="*{date}">
+                <div th:if="${#fields.hasErrors('date')}" th:errors="*{date}">Date error</div>
+
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div th:if="${drives != null}" class="drives">
+            <h2>Drives:</h2>
+            <span th:if="${drives.isEmpty()}">Drives not found :(</span>
+            <div th:each="drive: ${drives}">
+                <div class="drive" th:if="${!drive.driver.username.equals(#authentication.name) and
+                    drive.numberOfPassengers - drive.companions.size != 0 and
+                    !#lists.contains(drive.companions, currentUser)}">
+                    <div class="drive-left-content">
+                        <img class="profile-img" th:if="${drive.driver.details.avatarReference != null}" th:src="@{${'/image/' + drive.driver.details.avatarReference}}">
+                        <img class="profile-img" th:if="${drive.driver.details.avatarReference == null}" th:src="@{'/image/emptyavatar.png'}"/>
+                        <a th:href="@{${'/profile/' + drive.driver.id}}" th:text="'Driver: ' + ${drive.driver.username}"></a>
+                    </div>
+                    <div class="drive-right-content">
+                        <span th:text="${drive.time}"></span>
+                        <span th:text="'Price: ' + ${drive.price}"></span>
+                        <span th:text="${drive.numberOfPassengers - drive.companions.size} + ' places left'"></span>
+                        <div class="drive-actions">
+                            <a th:href="@{${'/drive/book/' + drive.id}}">Book</a>
+                            <a th:href="@{${'/bookmark/add/' + drive.id}}">Add to bookmarks</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

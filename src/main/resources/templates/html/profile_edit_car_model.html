@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Choose car model</title>
+</head>
+<body>
+    <form th:if="${error == null}" th:method="post" th:action="@{/profile/edit/model}" th:object="${carInfo}">
+        <label for="model">Select model of your car</label>
+        <select id="model" th:field="*{model}">
+            <option th:each="carModel : ${models}"
+                    th:value="${carModel}"
+                    th:text="${carModel}">
+            </option>
+        </select>
+        <button type="submit">Submit</button>
+        <div th:if="${#fields.hasErrors('model')}" th:errors="*{model}">Model error</div>
+    </form>
+    <p th:if="${error != null}" th:text="${error}">Model error</p>
+</body>
+</html>
